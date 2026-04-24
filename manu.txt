@@ -1,0 +1,688 @@
+1
+git init
+echo "Hello Git" > file1.txt
+git status
+git add file1.txt
+git commit -m "Initial commit"
+echo "Learning Git" >> file1.txt
+git add file1.txt
+git commit -m "Updated file1.txt"
+git log
+
+2
+git init
+echo "Hello World" > file.txt
+git add file.txt
+git commit -m "Initial commit"
+git branch feature
+git checkout feature
+echo "Feature work added" >> file.txt
+git add file.txt
+git commit -m "Added feature work"
+git checkout main
+cat file.txt
+echo "Main branch update" >> file.txt
+git add file.txt
+git commit -m "Updated in main"
+git merge feature
+git log --oneline --graph --all
+
+
+
+3.
+cd path\to\your\project
+git init
+git add .
+git commit -m "Initial commit"
+git remote add origin https://github.com/your-username/exp3-git.git
+git branch -M main
+git push -u origin main
+git clone https://github.com/your-username/exp3-git.git
+cd exp3-git
+git log
+git pull origin main --rebase
+git push
+
+
+
+
+
+4.🔹 Part 2: Clone the Forked Repository
+git clone https://github.com/your-username/repository-name.git
+cd repository-name
+git checkout -b feature-branch
+git add .
+git commit -m "Added new feature"
+git push origin feature-branch
+
+
+# Make edits
+git add .
+git commit -m "Updated as per review"
+git push origin feature-branch
+
+
+
+5.
+Experiment 5: Git Tagging and Release Creation
+🎯 Aim
+
+To create annotated tags, push them to GitHub, and create a release to understand software versioning.
+
+🔹 Step 1: Create a Project Folder
+mkdir exp5
+cd exp5
+🔹 Step 2: Initialize Git Repository
+git init
+
+👉 This creates a new Git repository.
+
+🔹 Step 3: Create a File
+echo Hello World > file.txt
+🔹 Step 4: Add and Commit File
+git add file.txt
+git commit -m "Initial commit"
+
+👉 This is your first version of project
+
+🔹 Step 5: Connect to GitHub
+Go to GitHub
+Click New Repository
+Name it (example: exp5)
+Copy repository URL
+
+Then run:
+
+git remote add origin https://github.com/your-username/exp5.git
+git branch -M main
+git push -u origin main
+🔹 Step 6: Create First Annotated Tag (v1.0)
+git tag -a v1.0 -m "Version 1.0 - Initial release"
+
+👉 Explanation:
+
+Marks first stable version
+🔹 Step 7: Make Changes (Second Version)
+echo New Feature >> file.txt
+git add file.txt
+git commit -m "Added new feature"
+🔹 Step 8: Create Second Annotated Tag (v1.1)
+git tag -a v1.1 -m "Version 1.1 - Added feature"
+
+👉 Explanation:
+
+Shows updated/improved version
+🔹 Step 9: View Tags
+git tag
+
+👉 Output:
+
+v1.0
+v1.1
+🔹 Step 10: Push Tags to GitHub
+git push origin --tags
+🔹 Step 11: Create Release on GitHub
+Open your repo on GitHub
+Click Releases
+Click Create a new release
+Choose tag:
+v1.0 → First release
+v1.1 → Updated release
+Add title + description
+Click Publish Release
+📊 Result
+Repository created
+Two annotated tags (v1.0, v1.1) created
+Tags pushed to GitHub
+Releases created successfully
+🎓 Conclusion
+
+Git tags help in:
+Version tracking
+Release management
+Easy rollback to previous versions
+
+
+
+
+experiment 19
+open github 
+upload files of 18th exp
+open jenkins
+select freestyle
+source code management------select git-----put repo url---
+poll scm----******
+execute command window batch 
+docker build -t java-app .
+docker run -d -t java-app
+build success 
+goto docker
+
+
+
+
+experiment 18
+Experiment 18: Docker Image Push to Docker Hub
+
+Step1. Create Dockerfile and Java File and save both in a folder by the name Docker-Java
+ 
+Dockerfile
+
+FROM eclipse-temurin:17-jdk
+WORKDIR /app
+COPY . /app
+RUN javac Grade.java
+CMD ["java", "Grade"]
+
+Java File
+
+import java.util.Scanner;
+
+public class Grade{
+
+  // Returns a letter grade based on the average
+  static char gradeFunction(double avg) {
+    if (avg >= 90) return 'A';
+    else if (avg >= 80) return 'B';
+    else if (avg >= 70) return 'C';
+    else if (avg >= 60) return 'D';
+    else return 'F';
+  }
+
+  public static void main(String[] args) {
+    Scanner scanner = new Scanner(System.in);
+
+    System.out.print("How many grades (1 to 5)? ");
+    int count = scanner.nextInt();
+
+    // Validate the input count
+    if (count < 1 || count > 5) {
+      System.out.println("Invalid number. You must enter between 1 and 5 grades.");
+      scanner.close();
+      return; // Exit
+    }
+
+    double sum = 0.0;
+
+    // Read each grade
+    for (int i = 1; i <= count; i++) {
+      System.out.print("Enter grade " + i + ": ");
+      double grade = scanner.nextDouble();
+      sum += grade;
+    }
+
+    double avg = sum / count;
+    System.out.println("Average: " + avg);
+    System.out.println("Letter grade: " + gradeFunction(avg));
+
+    scanner.close();
+  }
+}
+
+docker build -t java-app
+docker login
+docker tag java-app manasa860/java-app:v1
+docker push manasa860/java-app:v1
+verify on docker  hub
+go to acc settings----hub-----repository
+
+
+exp 17 volume
+docker run -d nginx
+docker run -d -p 8080:80 nginx
+open browser local host
+
+docker volume create myvolume
+docker run -it -v myvolume:/data ubuntu bash
+cd /data 
+echo "docker volume persistent" >test.txt
+exit
+docker run -it -v myvolume:/data ubuntu bash
+cd /data/test.txt
+docker run -d -p 8081:80 -v myvolume:/usr/share/nginx/html_nginx
+docker run -it -v myvolume:/data ubuntu bash
+echo "<h1> persistent web page </h1>" >/data/index.html
+open browser 8081
+docker ps 
+docker volume ls
+docker volume inspect myvolume
+
+
+
+exp 16 
+create a folder 
+mkdir docker-app
+cd docker-app
+
+create 3 files 
+sample.py
+app.py
+docker file
+
+
+
+app.py
+from http.server import SimpleHTTPRequestHandler, HTTPServer
+
+PORT = 5000
+
+class MyHandler(SimpleHTTPRequestHandler):
+    def do_GET(self):
+        self.send_response(200)
+        self.send_header("Content-type", "text/html")
+        self.end_headers()
+        self.wfile.write(b"<h1>Hello from Docker Python Container</h1>")
+
+server = HTTPServer(("0.0.0.0", PORT), MyHandler)
+print(f"Server running on port {PORT}...")
+server.serve_forever()
+
+
+
+
+server.py
+print("Hello from Docker Container!")
+
+
+dockerfile
+
+FROM python:3.9-slim
+WORKDIR /app
+COPY sample.py .
+COPY app.py .
+EXPOSE 5000
+CMD ["python", "sample.py"]
+
+
+
+cmds 
+docker build -t my-python-app .
+docker images
+docker run my-python-app 
+docker run -p 5000:5000 my-python-app python app.py
+
+
+
+
+
+
+experiment 15
+docker ps
+docker ps -all
+docker run hello-world
+docker pull nginx
+docker run -d -p 8080:80 nginx
+open browser
+docker ps
+docker stop container id
+docker rm container id
+
+
+
+
+experiment 14
+
+follow 12th exp procrdure
+pom.xml
+
+<build>
+
+<plugins>
+    <plugin>
+        <groupId>org.jacoco</groupId>
+        <artifactId>jacoco-maven-plugin</artifactId>
+        <version>0.8.11</version>
+
+        <executions>
+
+            <!-- Attach JaCoCo agent -->
+            <execution>
+                <goals>
+                    <goal>prepare-agent</goal>
+                </goals>
+            </execution>
+
+            <!-- Generate report -->
+            <execution>
+                <id>report</id>
+                <phase>test</phase>
+                <goals>
+                    <goal>report</goal>
+                </goals>
+            </execution>
+
+        </executions>
+    </plugin>
+</plugins>
+
+run 
+mvn clean test 
+go to target folder-----site----index.html
+
+
+
+
+
+exp 13
+open github 
+create repository
+upload src and pom.xml 
+open jenkins
+create item
+maven project
+source code managemnet------select git-----repository link
+
+trigger poll scm---******
+build----Root POM---pom.xml
+goals----package
+post steps ----run only buildsteps
+add post build ----archive artifacts-----target /*.jar
+apply
+
+
+
+
+
+claculatertest java
+
+import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
+
+public class CalculatorTest {
+
+    Calculator calc = new Calculator();
+
+    @Test
+    void testAdd() {
+        assertEquals(5, calc.add(2, 3));
+    }
+
+    @Test
+    void testSubtract() {
+        assertEquals(1, calc.subtract(3, 2));
+    }
+
+    @Test
+    void testMultiply() {
+        assertEquals(6, calc.multiply(2, 3));
+    }
+
+    @Test
+    void testDivide() {
+        assertEquals(2, calc.divide(6, 3));
+    }
+
+    @Test
+    void testDivideByZero() {
+        assertThrows(ArithmeticException.class, () -> {
+            calc.divide(5, 0);
+        });
+    }
+}
+
+
+
+
+
+
+
+
+
+
+calculator java
+public class Calculator {
+
+    public int add(int a, int b) {
+        return a + b;
+    }
+
+    public int subtract(int a, int b) {
+        return a - b;
+    }
+
+    public int multiply(int a, int b) {
+        return a * b;
+    }
+
+    public int divide(int a, int b) {
+        if (b == 0) throw new ArithmeticException("Divide by zero");
+        return a / b;
+    }
+}
+
+
+
+Experiment 18: Docker Image Push to Docker Hub
+
+Objective: To understand Docker registries and learn how to push a Docker image to Docker Hub for sharing and deployment.
+
+
+Step1. Create Dockerfile and Java File and save both in a folder by the name Docker-Java
+ 
+Dockerfile
+
+FROM eclipse-temurin:17-jdk
+WORKDIR /app
+COPY . /app
+RUN javac Grade.java
+CMD ["java", "Grade"]
+
+Java File
+
+import java.util.Scanner;
+
+public class Grade{
+
+  // Returns a letter grade based on the average
+  static char gradeFunction(double avg) {
+    if (avg >= 90) return 'A';
+    else if (avg >= 80) return 'B';
+    else if (avg >= 70) return 'C';
+    else if (avg >= 60) return 'D';
+    else return 'F';
+  }
+
+  public static void main(String[] args) {
+    Scanner scanner = new Scanner(System.in);
+
+    System.out.print("How many grades (1 to 5)? ");
+    int count = scanner.nextInt();
+
+    // Validate the input count
+    if (count < 1 || count > 5) {
+      System.out.println("Invalid number. You must enter between 1 and 5 grades.");
+      scanner.close();
+      return; // Exit
+    }
+
+    double sum = 0.0;
+
+    // Read each grade
+    for (int i = 1; i <= count; i++) {
+      System.out.print("Enter grade " + i + ": ");
+      double grade = scanner.nextDouble();
+      sum += grade;
+    }
+
+    double avg = sum / count;
+    System.out.println("Average: " + avg);
+    System.out.println("Letter grade: " + gradeFunction(avg));
+
+    scanner.close();
+  }
+}
+
+
+
+
+
+
+public class GreetingService {
+
+    public String greet(String name) {
+        if (name == null || name.isEmpty()) {
+            return "Hello, Guest!";
+        }
+        return "Hello, " + name + "!";
+    }
+}
+
+
+
+
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+
+class GreetingServiceTest {
+
+    GreetingService service = new GreetingService();
+
+    @Test
+    void testGreetingWithName() {
+        assertEquals("Hello, John!", service.greet("John"));
+    }
+
+    @Test
+    void testGreetingWithoutName() {
+        assertEquals("Hello, Guest!", service.greet(""));
+    }
+}
+
+
+
+
+
+
+
+public class LinearSearch {
+
+    public int search(int[] arr, int key) {
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i] == key) {
+                return i;
+            }
+        }
+        return -1;
+    }
+}
+
+
+
+
+
+
+
+
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+
+class LinearSearchTest {
+
+    LinearSearch ls = new LinearSearch();
+
+    @Test
+    void testElementFound() {
+        int[] arr = {1, 2, 3, 4, 5};
+        assertEquals(2, ls.search(arr, 3));
+    }
+
+    @Test
+    void testElementNotFound() {
+        int[] arr = {1, 2, 3};
+        assertEquals(-1, ls.search(arr, 10));
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+public class MaxFinder {
+
+    public int findMax(int a, int b, int c) {
+        return Math.max(a, Math.max(b, c));
+    }
+}
+
+
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+
+class MaxFinderTest {
+
+    MaxFinder mf = new MaxFinder();
+
+    @Test
+    void testMaxValue() {
+        assertEquals(9, mf.findMax(3, 9, 5));
+    }
+
+    @Test
+    void testAllEqual() {
+        assertEquals(5, mf.findMax(5, 5, 5));
+    }
+}
+
+
+
+public class BankAccount {
+
+    private double balance;
+
+    public BankAccount(double balance) {
+        this.balance = balance;
+    }
+
+    public double getBalance() {
+        return balance;
+    }
+
+    public void deposit(double amount) {
+        if (amount > 0)
+            balance += amount;
+    }
+
+    public void withdraw(double amount) {
+        if (amount > 0 && amount <= balance)
+            balance -= amount;
+        else
+            throw new IllegalArgumentException("Invalid withdrawal");
+    }
+}
+
+
+
+
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+
+class BankAccountTest {
+
+    @Test
+    void testDeposit() {
+        BankAccount acc = new BankAccount(1000);
+        acc.deposit(500);
+        assertEquals(1500, acc.getBalance());
+    }
+
+    @Test
+    void testWithdraw() {
+        BankAccount acc = new BankAccount(1000);
+        acc.withdraw(400);
+        assertEquals(600, acc.getBalance());
+    }
+
+    @Test
+    void testInvalidWithdraw() {
+        BankAccount acc = new BankAccount(1000);
+        assertThrows(IllegalArgumentException.class, () -> acc.withdraw(2000));
+    }
+}
